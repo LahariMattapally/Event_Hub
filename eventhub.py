@@ -438,6 +438,72 @@ class Eventhub():
         self.configure_button(self.back_button)
         self.back_button.pack(pady=10)
 
+    def user_dashboard(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add user dashboard elements
+        label = tkinter.Label(self.tkn, text="User Dashboard", font=("Helvetica", 20))
+        label.configure(bg="white")
+        label.pack(pady=20)
+
+        # Add buttons to navigate to different views
+        event_button = tkinter.Button(self.tkn, text="Register for Event", command=self.show_user_event_page)
+        self.configure_button(event_button)
+        event_button.pack(pady=20)
+
+        #create treeview of events registered by user
+        # Create a Treeview widget to display events
+        event_tree = ttk.Treeview(self.tkn, columns=(
+            "Event Name", "Event Date", "Event Time", "Event Location", "Event Description"), show="headings")
+        event_tree.heading("#1", text="Event Name")
+        event_tree.column("#1", width=150)
+        event_tree.heading("#2", text="Event Date")
+        event_tree.column("#2", width=150)
+        event_tree.heading("#3", text="Event Time")
+        event_tree.column("#3", width=150)
+        event_tree.heading("#4", text="Event Location")
+        event_tree.column("#4", width=150)
+        event_tree.heading("#5", text="Event Description")
+        event_tree.column("#5", width=150)
+
+        # Get the user's email (you should have a way to fetch the user's email after login)
+        user_email = self.current_email
+
+        # Connect to the MySQL database
+        with self.database.cursor() as cursor:
+                # Query the user table in MySQL to get the userID based on email
+                cursor.execute("SELECT userID FROM eventhub.user WHERE email=%s", (user_email,))
+                user_id = cursor.fetchone()
+    
+                if user_id:
+                    # Query the eventRegistration table in MySQL to get eventIDs associated with the user
+                    cursor.execute("SELECT eventID FROM eventhub.eventRegistration WHERE userID=%s", (user_id[0],))
+                    event_ids = cursor.fetchall()
+                else:
+                    event_ids = []
+
+        # Connect to the MySQL database
+        with self.database.cursor() as cursor:
+                # Retrieve event data for the user's registered events
+                events = []
+                for event_id in event_ids:
+                    cursor.execute("SELECT * FROM eventhub.event WHERE eventID=%s", event_id)
+                    event_data = cursor.fetchone()
+                    events.append(event_data)
+
+        # Populate the Treeview with events registered by the user
+        #testing
+        for event in events:
+            event_tree.insert("", "end", values=event)
+
+        event_tree.pack()
+
+        logout_button = tkinter.Button(self.tkn, text="Logout", command=self.show_welcome_page)
+        self.configure_button(logout_button)
+        logout_button.pack(pady=10)
+
+
 
 
 
