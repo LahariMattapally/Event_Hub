@@ -6,3 +6,7 @@ import mysql.connector as mysql
 import random
 import smtplib
 from tkcalendar import Calendar, DateEntry
+
+
+class Eventhub():
+    pass
