@@ -220,4 +220,45 @@ class Eventhub():
         register_button.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
 
+    def show_login_page(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add login form elements
+        label = tkinter.Label(self.tkn, text="Welcome to Login", font=("Helvetica", 20))
+        label.configure(bg="white")
+        label.pack(pady=20)
+
+        # Email (Gmail ID) entry
+        self.email_entry = tkinter.Label(self.tkn, text="Enter Email ID :")
+        self.email_entry.configure(bg="white")
+        self.email_entry.pack()
+
+        self.email_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.email_entry)
+        self.email_entry.pack()
+
+        # Send OTP button
+        self.send_otp_button = tkinter.Button(self.tkn, text="Send OTP", command=self.verifyUser)
+        self.configure_button(self.send_otp_button)  # Apply custom button styling
+        self.send_otp_button.pack(pady=20)
+
+        # Placeholder for OTP entry
+        self.otp_label = tkinter.Label(self.tkn, text="Enter OTP:")
+        self.otp_label.configure(bg="white")
+        self.otp_label.pack()
+        self.otp_entry = tkinter.Entry(self.tkn, state="disabled")  # Initially disabled
+        self.configure_entry(self.otp_entry)
+        self.otp_entry.pack()
+
+        # Login button (disabled until OTP is entered)
+        self.login_button = tkinter.Button(self.tkn, text="Login", command=self.loginUser, state="disabled")
+        self.configure_button(self.login_button)  # Apply custom button styling
+        self.login_button.pack(pady=20)
+
+        # Register button
+        self.register_button = tkinter.Button(self.tkn, text="Register", command=self.show_register_page)
+        self.configure_button(self.register_button)  # Apply custom button styling
+        self.register_button.pack(pady=10)
+
 
