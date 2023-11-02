@@ -549,6 +549,20 @@ class Eventhub():
             self.event_tree.insert("", "end", values=event)
 
         self.event_tree.grid(row=2, column=0, columnspan=3, padx=30,pady=10,sticky="nsew")
+        
+       # Register button to register for selected event
+        register_button = tkinter.Button(self.tkn, text="Register", command=self.register_for_event)
+        self.configure_button(register_button)
+        register_button.grid(row=3, column=0, pady=10)
+
+        user_dashboard_button = tkinter.Button(self.tkn, text="My Dashboard", command=self.user_dashboard)
+        self.configure_button(user_dashboard_button)
+        user_dashboard_button.grid(row=3, column=1, pady=10)
+
+        # Back button to return to the main page
+        back_button = tkinter.Button(self.tkn, text="Logout", command=self.show_main_page)
+        self.configure_button(back_button)
+        back_button.grid(row=3, column=2, pady=10)
 
 
 
