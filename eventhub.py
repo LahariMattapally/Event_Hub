@@ -34,3 +34,17 @@ class Eventhub():
         self.createEventTable()
         self.createEventRegistrationTable()
         self.createEventCommentTable()
+        
+    def createUserTable(self):
+        # SQL statement for creating the 'user' table
+        create_user_table = """
+        CREATE TABLE IF NOT EXISTS user (
+            userID INT AUTO_INCREMENT PRIMARY KEY,
+            firstName VARCHAR(255) NOT NULL,
+            lastName VARCHAR(255) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL
+        );
+        """
+        self.cursor.execute(create_user_table)
+        self.database.commit()
