@@ -78,3 +78,21 @@ class Eventhub():
         """
         self.cursor.execute(create_event_registration_table)
         self.database.commit()
+
+
+    def createEventCommentTable(self):
+        # SQL statement for creating the 'eventComment' table
+        create_event_comment_table = """
+        CREATE TABLE IF NOT EXISTS eventComment (
+            eventCommentID INT AUTO_INCREMENT PRIMARY KEY,
+            eventID INT NOT NULL,
+            userID INT NOT NULL,
+            comment TEXT NOT NULL,
+            FOREIGN KEY (eventID) REFERENCES event (eventID),
+            FOREIGN KEY (userID) REFERENCES user (userID)
+        );
+        """
+        self.cursor.execute(create_event_comment_table)
+
+        # Commit the changes to the database
+        self.database.commit()
