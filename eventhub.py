@@ -549,7 +549,7 @@ class Eventhub():
             self.event_tree.insert("", "end", values=event)
 
         self.event_tree.grid(row=2, column=0, columnspan=3, padx=30,pady=10,sticky="nsew")
-        
+
        # Register button to register for selected event
         register_button = tkinter.Button(self.tkn, text="Register", command=self.register_for_event)
         self.configure_button(register_button)
@@ -563,6 +563,41 @@ class Eventhub():
         back_button = tkinter.Button(self.tkn, text="Logout", command=self.show_main_page)
         self.configure_button(back_button)
         back_button.grid(row=3, column=2, pady=10)
+
+
+
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+    def send_otp(self,gmail):
+        #generate a random 6-digit OTP
+        self.current_otp = random.randint(100000,999999)
+
+        #setting up server
+        server = smtplib.SMTP('smtp.gmail.com',587)
+        server.starttls()
+
+        password = "ecyvohyivtvbawwy"
+        sendermail = "bis698eventhub@gmail.com"
+        server.login(sendermail,password)
+
+        body = f"Your OTP is {self.current_otp}"
+        subject = "OTP verification for Eventhub"
+        message = f'subject:{subject}\n\n{body}'
+
+        try:
+            server.sendmail(sendermail,gmail,message)
+            #show message box otp sent
+            messagebox.showinfo("OTP Sent", "OTP has been sent to your email")
+        except Exception as e:
+            print(e)
+            messagebox.showerror("Error", "Unable to send OTP")
+
+        server.quit()
+
+
 
 
 
