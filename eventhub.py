@@ -184,3 +184,40 @@ class Eventhub():
         get_started_button.pack(pady=20)
 
 
+       
+    def show_main_page(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Create a frame for the main page content
+        main_frame = tkinter.Frame(self.tkn)
+        main_frame.configure(bg="white")
+        main_frame.pack(expand=True)
+
+        # Add a title label
+        title_label = tkinter.Label(main_frame, text="EVENT HUB", font=("Helvetica", 20))
+        title_label.configure(bg="white")
+        title_label.pack(pady=20)
+
+        # Create a grid for the buttons
+        button_frame = tkinter.Frame(main_frame)
+        button_frame.configure(bg="white")
+        button_frame.pack(expand=True)
+
+        # Add buttons to navigate to different views
+        welcome_button = tkinter.Button(button_frame, text="Back to Welcome Page", command=self.show_welcome_page)
+        login_button = tkinter.Button(button_frame, text="Login", command=self.show_login_page)
+        register_button = tkinter.Button(button_frame, text="Register", command=self.show_register_page)
+
+        # Configure button appearance
+        self.configure_button(welcome_button)
+        self.configure_button(login_button)
+        self.configure_button(register_button)
+
+        # Pack the buttons in a grid layout
+        welcome_button.grid(row=2, column=0, padx=10, pady=10)
+        login_button.grid(row=0, column=0, padx=10, pady=10)
+        register_button.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+
+
