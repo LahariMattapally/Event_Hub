@@ -108,3 +108,23 @@ class Eventhub():
         button.configure(bg="#0078d4", fg="white", font=("Verdana", 12), relief="raised")
         #button rounded border
         button.configure(borderwidth=3, highlightthickness=3, width=20, height=1)
+
+
+
+    def configure_entry(self, entry_widget):
+        entry_widget.config(
+            font=("Arial", 12),  # Font and font size
+            bd=2,  # Border width
+            relief="ridge",  # Border style
+            fg="black",  # Text color
+            bg="white",  # Background color
+            selectbackground="lightblue",  # Background color when selected
+            selectforeground="black",  # Text color when selected
+            insertbackground="black",  # Cursor color
+            insertwidth=2,  # Cursor width
+            highlightcolor="blue",  # Highlight color when focused
+            highlightthickness=1,  # Highlight thickness
+            highlightbackground="black",  # Highlight background color
+            disabledbackground="lightgray",  # Background color when disabled
+            disabledforeground="gray"  # Text color when disabled
+        )
