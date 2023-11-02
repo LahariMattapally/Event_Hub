@@ -599,6 +599,186 @@ class Eventhub():
 
 
 
+    def verifyUser(self):
+        #get the user's email
+        self.current_email = self.email_entry.get()
+
+        if self.current_email == "admin":
+            self.admin_dashboard()
+            #welcome to admin page message box
+            messagebox.showinfo("Welcome", "Welcome Admin")
+            return
+        if self.current_email == "user":
+            self.user_dashboard()
+            #welcome to user page message box
+            messagebox.showinfo("Welcome", "Welcome User")
+            return
+
+        #check with the database if the email exists
+        query = "SELECT * FROM eventhub.user WHERE email = %s"
+        data = (self.current_email,)
+        try:
+            self.cursor.execute(query, data)
+            user = self.cursor.fetchone()
+        except mysql.Error as err:
+            messagebox.showerror("Error", f"MySQL Error: {err}")
+            return
+        
+        if user is not None:
+            #send OTP to the user's email
+            self.send_otp(self.current_email)
+        else:
+            messagebox.showerror("Error", "User not found")
+
+        self.otp_entry.configure(state="normal")
+        self.login_button.configure(state="normal")
+
+
+
+
+    def register_for_event(self):
+        # Get the selected event
+        selected_event = self.event_tree.focus()
+
+        # Validate that an event was selected
+        if selected_event == "":
+            messagebox.showerror("Error", "Please select an event")
+        else:
+            # Get the event's data
+            event_data = self.event_tree.item(selected_event, "values")
+
+            # Get the user's email (you should have a way to fetch the user's email after login)
+            user_email = self.current_email  # Replace with the actual user's email
+
+            # Connect to the 'eventhub' database and retrieve the user's ID based on email
+            query = "SELECT userID FROM eventhub.user WHERE email = %s"
+            data = (user_email,)
+
+            try:
+                self.cursor.execute(query, data)
+                user_id = self.cursor.fetchone()
+            except mysql.Error as err:
+                messagebox.showerror("Error", f"MySQL Error: {err}")
+                return
+
+            if user_id:
+                # Check if the user has already registered for this event
+                query = "SELECT * FROM eventhub.eventRegistration WHERE eventID = %s AND userID = %s"
+                data = (event_data[0], user_id[0])
+
+                try:
+                    self.cursor.execute(query, data)
+                    existing_registration = self.cursor.fetchone()
+                except mysql.Error as err:
+                    messagebox.showerror("Error", f"MySQL Error: {err}")
+                    return
+
+                if existing_registration:
+                    messagebox.showinfo("Info", "You have already registered for this event.")
+                else:
+                    # Connect to the 'eventRegistration' database and insert the event's data
+                    query = "INSERT INTO eventhub.eventRegistration(eventID, userID) VALUES (%s, %s)"
+                    data = (event_data[0], user_id[0])
+
+                    try:
+                        self.cursor.execute(query, data)
+                        self.database.commit()
+                        messagebox.showinfo("Success", "You have registered for the event successfully!")
+                        self.user_dashboard()
+                    except mysql.Error as err:
+                        messagebox.showerror("Error", f"MySQL Error: {err}")
+            else:
+                messagebox.showerror("Error", "User not found")
+
+
+    def search_events(self):
+        # Get the user's input
+        search = self.search_entry.get()
+
+        # Validate the user's input
+        if search == "":
+            messagebox.showerror("Error", "Please enter a search term")
+        else:
+            # Connect to the 'eventhub' database and retrieve event data
+            query = "SELECT * FROM eventhub.event WHERE eventName LIKE %s"
+            data = (f"%{search}%",)
+
+            try:
+                self.cursor.execute(query, data)
+                events = self.cursor.fetchall()
+            except mysql.Error as err:
+                messagebox.showerror("Error", f"MySQL Error: {err}")
+                return
+
+            # Populate the Treeview with event data
+            for event in events:
+                self.event_tree.insert("", "end", values=event)
+
+
+    def registerUser(self):
+        # Get the user's input
+        firstName = self.first_name_entry.get()
+        lastName = self.last_name_entry.get()
+        email = self.email_entry.get()
+        password = self.password_entry.get()
+
+        # Validate the user's input
+        if firstName == "" or lastName == "" or email == "" or password == "":
+            messagebox.showerror("Error", "Please fill in all fields")
+        else:
+            # Insert the user's input into the database
+            query = "INSERT INTO eventhub.user(firstName, lastName, email, password) VALUES (%s, %s, %s, %s)"
+            data = (firstName, lastName, email, password)
+
+            try:
+                self.cursor.execute(query, data)
+                self.database.commit()
+                messagebox.showinfo("Success", "You have registered successfully!")
+                self.show_login_page()
+            except mysql.Error as err:
+                messagebox.showerror("Error", f"MySQL Error: {err}")
+
+    def loginUser(self):
+        # Get the user otp
+        otp = int(self.otp_entry.get())
+    
+        # Validate the user's input
+        if otp == "" :
+            messagebox.showerror("Error", "Please fill in otp sent to mail")
+        else:
+            # Connect to the 'eventhub' database and retrieve event data
+            if otp == self.current_otp:
+                messagebox.showinfo("Success", "You have logged in successfully!")
+                self.user_dashboard()
+            else:
+                messagebox.showerror("Error", "Invalid otp. Click on send otp again")
+
+
+
+    def registerEvent(self):
+        # Get the user's input
+        eventName = self.event_name_entry.get()
+        eventDate = self.event_date_entry.get()
+        eventTime = self.event_time_entry.get()
+        eventLocation = self.event_location_entry.get()
+        eventDescription = self.event_description_entry.get()
+
+        # Validate the user's input
+        if eventName == "" or eventDate == "" or eventTime == "" or eventLocation == "" or eventDescription == "":
+            messagebox.showerror("Error", "Please fill in all fields")
+        else:
+            # Insert the user's input into the database
+            query = """INSERT INTO eventhub.event(eventName, eventDate, eventTime, eventLocation, eventDescription)
+                    VALUES(%s, %s, %s, %s, %s)"""
+            values = (eventName, eventDate, eventTime, eventLocation, eventDescription)
+
+            self.cursor.execute(query, values)
+            self.database.commit()
+
+            messagebox.showinfo("Success", "You have registered successfully!")
+            self.admin_dashboard()
+
+
 
 
 
