@@ -150,3 +150,29 @@ class Eventhub():
             widget.destroy()
 
 
+        #welcome to event hub label
+        welcome_label = tkinter.Label(self.tkn, text="Welcome to Event Hub", font=("Helvetica", 20))
+        welcome_label.pack(pady=0)
+        #label background color to white
+        welcome_label.configure(bg="white")
+
+
+        #display the image in images/welcome.jpg 900x600
+        welcome_image_path = Image.open("images/welcome.jpg")
+        welcome_image = ImageTk.PhotoImage(welcome_image_path)        
+        welcome_image_label = tkinter.Label(self.tkn, image=welcome_image)
+        welcome_image_label.photo = welcome_image
+        welcome_image_label.pack(pady=0)
+
+        #display text and button upon the image
+        #this happens after creating a frame and displaying the text and button on the frame
+        #welcome frame
+        welcome_frame = tkinter.Frame(self.tkn)
+        welcome_frame.pack(pady=10)
+
+
+        # introduce about the event hub
+        label = tkinter.Label(self.tkn, text="Event Hub is a platform for event organizers to create and promote their events, and for users to discover and register for events.", font=("Helvetica", 10))
+        label.configure(bg="white")
+        label.pack(pady=10)
+
