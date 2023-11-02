@@ -376,6 +376,68 @@ class Eventhub():
         self.configure_button(logout_button)
         logout_button.pack(pady=10)
 
+        
+    def show_admin_event_page(self):
+        self.tkn.geometry("800x500")
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add event form elements
+        label = tkinter.Label(self.tkn, text="Admin Event Page", font=("Helvetica", 20))
+        label.configure(bg="white")
+        label.pack(pady=20)
+
+        # Event Name entry
+        self.event_name_label = tkinter.Label(self.tkn, text="Event Name:")
+        self.configure_label(self.event_name_label)
+        self.event_name_label.pack()
+
+        self.event_name_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.event_name_entry)
+        self.event_name_entry.pack()
+
+        # Event Date entry
+        self.event_date_label = tkinter.Label(self.tkn, text="Event Date:")
+        self.configure_label(self.event_date_label)
+        self.event_date_label.pack()
+        self.event_date_entry = DateEntry(self.tkn,width=15,background="darkblue", foreground="white", date_pattern="MM/dd/yyyy", font=("Arial", 15))
+        # self.configure_entry(self.event_date_entry)
+        self.event_date_entry.pack()
+
+        # Event Time entry
+        self.event_time_label = tkinter.Label(self.tkn, text="Event Time: HH:MM AM/PM")
+        self.configure_label(self.event_time_label)
+        self.event_time_label.pack()
+        self.event_time_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.event_time_entry)
+        self.event_time_entry.pack()
+
+        # Event Location entry
+        self.event_location_label = tkinter.Label(self.tkn, text="Event Location:")
+        self.configure_label(self.event_location_label)
+        self.event_location_label.pack()
+        self.event_location_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.event_location_entry)
+        self.event_location_entry.pack()
+
+        # Event Description entry
+        self.event_description_label = tkinter.Label(self.tkn, text="Event Description:")
+        self.configure_label(self.event_description_label)
+        self.event_description_label.pack()
+        self.event_description_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.event_description_entry)
+        self.event_description_entry.pack()
+
+        # Register button
+        self.register_button = tkinter.Button(self.tkn, text="Register", command=self.registerEvent)
+        self.configure_button(self.register_button)
+        self.register_button.pack(pady=10)
+
+        #back to admin dashboard button
+        self.back_button = tkinter.Button(self.tkn, text="Back to Admin Dashboard", command=self.admin_dashboard)
+        self.configure_button(self.back_button)
+        self.back_button.pack(pady=10)
+
 
 
 
