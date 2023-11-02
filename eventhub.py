@@ -25,3 +25,6 @@ class Eventhub():
             'database': 'eventhub'
         }
 
+
+        self.database= mysql.connect(**database)
+        self.cursor = self.database.cursor()
