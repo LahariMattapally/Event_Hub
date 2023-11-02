@@ -260,5 +260,11 @@ class Eventhub():
         self.register_button = tkinter.Button(self.tkn, text="Register", command=self.show_register_page)
         self.configure_button(self.register_button)  # Apply custom button styling
         self.register_button.pack(pady=10)
+        
+        # Back button to return to the welcome page
+        self.back_button = tkinter.Button(self.tkn, text="Back to Welcome", command=self.show_welcome_page)
+        self.configure_button(self.back_button)  # Apply custom button styling
+        self.back_button.pack(pady=10)
+
 
 
