@@ -102,3 +102,9 @@ class Eventhub():
         self.cursor.close()
         self.database.close()
 
+
+    def configure_button(self, button):
+        #curver border
+        button.configure(bg="#0078d4", fg="white", font=("Verdana", 12), relief="raised")
+        #button rounded border
+        button.configure(borderwidth=3, highlightthickness=3, width=20, height=1)
