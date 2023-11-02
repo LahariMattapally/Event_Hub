@@ -352,6 +352,30 @@ class Eventhub():
         event_tree.heading("#5", text="Event Description")
         event_tree.column("#5", width=150)
 
+        # Connect to the 'events.db' database and retrieve event data from mysql   
+        query = "SELECT * FROM eventhub.event"
+        try:
+            self.cursor.execute(query)
+            events = self.cursor.fetchall()
+        except mysql.Error as err:
+            messagebox.showerror("Error", f"MySQL Error: {err}")
+            return
+        
+        # Populate the Treeview with event data
+        for event in events:
+            event_tree.insert("", "end", values=event)
+        
+        event_tree.pack()
+
+        # Add buttons to navigate to different views
+        event_button = tkinter.Button(self.tkn, text="Add Event", command=self.show_admin_event_page)
+        self.configure_button(event_button)
+        event_button.pack(pady=20)
+
+        logout_button = tkinter.Button(self.tkn, text="Logout", command=self.show_welcome_page)
+        self.configure_button(logout_button)
+        logout_button.pack(pady=10)
+
 
 
 
