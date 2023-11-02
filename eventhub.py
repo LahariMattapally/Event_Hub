@@ -96,3 +96,9 @@ class Eventhub():
 
         # Commit the changes to the database
         self.database.commit()
+
+    def __del__(self):
+        # Close the database connection
+        self.cursor.close()
+        self.database.close()
+
