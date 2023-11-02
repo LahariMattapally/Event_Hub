@@ -504,6 +504,52 @@ class Eventhub():
         logout_button.pack(pady=10)
 
 
+    def show_user_event_page(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add user event page elements
+        label = tkinter.Label(self.tkn, text="User Event Page", font=("Helvetica", 20))
+        label.configure(bg="white") 
+        label.grid(row=0, column=0, columnspan=2, pady=20)
+
+        # Search box
+        search_label = tkinter.Label(self.tkn, text="Search Events:")
+        self.configure_label(search_label)
+        search_label.grid(row=1, column=0, pady=10)
+        self.search_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.search_entry)
+        self.search_entry.grid(row=1, column=1, pady=10)
+        search_button = tkinter.Button(self.tkn, text="Search", command=self.search_events)
+        self.configure_button(search_button)
+        search_button.grid(row=1, column=2, pady=10)
+
+        # Create a Treeview widget to display events
+        self.event_tree = ttk.Treeview(self.tkn, columns=(
+            "Event Name", "Event Date", "Event Time", "Event Location", "Event Description"), show="headings")
+        self.event_tree.heading("#1", text="Event Name")
+        self.event_tree.column("#1", width=150)
+        self.event_tree.heading("#2", text="Event Date")
+        self.event_tree.column("#2", width=150)
+        self.event_tree.heading("#3", text="Event Time")
+        self.event_tree.column("#3", width=150)
+        self.event_tree.heading("#4", text="Event Location")
+        self.event_tree.column("#4", width=150)
+        self.event_tree.heading("#5", text="Event Description")
+        self.event_tree.column("#5", width=150)
+
+        # Connect to the MySQL database
+        with self.database.cursor() as cursor:
+            # Retrieve event data from the 'event' table in MySQL
+            cursor.execute("SELECT * FROM eventhub.event")
+            events = cursor.fetchall()
+
+        # Populate the Treeview with event data
+        for event in events:
+            self.event_tree.insert("", "end", values=event)
+
+        self.event_tree.grid(row=2, column=0, columnspan=3, padx=30,pady=10,sticky="nsew")
+
 
 
 
