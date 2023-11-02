@@ -15,3 +15,13 @@ class Eventhub():
         self.tkn.title("Event Hub")
         self.tkn.geometry("800x500")
         self.show_welcome_page()
+
+
+        database = {
+            'user': 'root',
+            'password': 'Lucky',
+            'host': 'localhost',
+            'port': 3306,
+            'database': 'eventhub'
+        }
+
