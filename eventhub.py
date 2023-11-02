@@ -176,3 +176,11 @@ class Eventhub():
         label.configure(bg="white")
         label.pack(pady=10)
 
+
+        #button to main page    
+        #let's get started button
+        get_started_button = tkinter.Button(self.tkn, text="Let's Get Started", command=self.show_main_page)
+        self.configure_button(get_started_button)
+        get_started_button.pack(pady=20)
+
+
