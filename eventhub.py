@@ -320,6 +320,38 @@ class Eventhub():
         self.back_button.pack(pady=10)
 
 
+    def admin_dashboard(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add admin dashboard elements
+        label = tkinter.Label(self.tkn, text="Admin Dashboard", font=("Helvetica", 20))
+        label.configure(bg="white")
+        label.pack(pady=20)
+
+        #search bar to search events from treeview
+        search_label = tkinter.Label(self.tkn, text="Search Event Name :")
+        self.configure_label(search_label)
+        search_label.pack()
+        self.search_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.search_entry)
+        self.search_entry.pack()
+
+        #treeview of events 
+        # Create a Treeview widget to display events
+        event_tree = ttk.Treeview(self.tkn, columns=(
+        "Event Name", "Event Date", "Event Time", "Event Location", "Event Description"), show="headings")
+        event_tree.heading("#1", text="Event Name")
+        event_tree.column("#1", width=150)
+        event_tree.heading("#2", text="Event Date")
+        event_tree.column("#2", width=150)
+        event_tree.heading("#3", text="Event Time")
+        event_tree.column("#3", width=150)
+        event_tree.heading("#4", text="Event Location")
+        event_tree.column("#4", width=150)
+        event_tree.heading("#5", text="Event Description")
+        event_tree.column("#5", width=150)
+
 
 
 
