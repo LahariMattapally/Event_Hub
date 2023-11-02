@@ -128,3 +128,15 @@ class Eventhub():
             disabledbackground="lightgray",  # Background color when disabled
             disabledforeground="gray"  # Text color when disabled
         )
+    def configure_label(self, label_widget):
+        label_widget.config(
+            font=("Helvetica", 12),  # Font and font size
+            fg="black",  # Text color (foreground color)
+            bg="white",  # Background color
+            padx=5,  # Padding on the x-axis
+            pady=5,  # Padding on the y-axis
+            anchor="center",  # Text alignment (centered)
+        )
+
+
+
