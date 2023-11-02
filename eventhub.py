@@ -64,3 +64,17 @@ class Eventhub():
         """
         self.cursor.execute(create_event_table)
         self.database.commit()
+
+    def createEventRegistrationTable(self):
+        # SQL statement for creating the 'eventRegistration' table
+        create_event_registration_table = """
+        CREATE TABLE IF NOT EXISTS eventRegistration (
+            eventRegistrationID INT AUTO_INCREMENT PRIMARY KEY,
+            eventID INT NOT NULL,
+            userID INT NOT NULL,
+            FOREIGN KEY (eventID) REFERENCES event (eventID),
+            FOREIGN KEY (userID) REFERENCES user (userID)
+        );
+        """
+        self.cursor.execute(create_event_registration_table)
+        self.database.commit()
