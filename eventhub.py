@@ -9,4 +9,9 @@ from tkcalendar import Calendar, DateEntry
 
 
 class Eventhub():
-    pass
+    def __init__(self):
+        super().__init__()
+        self.tkn = tkinter.Tk()
+        self.tkn.title("Event Hub")
+        self.tkn.geometry("800x500")
+        self.show_welcome_page()
