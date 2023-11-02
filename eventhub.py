@@ -139,4 +139,14 @@ class Eventhub():
         )
 
 
+    def show_welcome_page(self):
+        self.tkn.geometry("850x600")  # Slightly increase the height for a more dynamic look
+
+        #background color to white
+        self.tkn.configure(bg="white")
+
+
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
 
