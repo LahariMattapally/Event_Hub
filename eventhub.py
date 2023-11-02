@@ -260,11 +260,66 @@ class Eventhub():
         self.register_button = tkinter.Button(self.tkn, text="Register", command=self.show_register_page)
         self.configure_button(self.register_button)  # Apply custom button styling
         self.register_button.pack(pady=10)
-        
+
         # Back button to return to the welcome page
         self.back_button = tkinter.Button(self.tkn, text="Back to Welcome", command=self.show_welcome_page)
         self.configure_button(self.back_button)  # Apply custom button styling
         self.back_button.pack(pady=10)
+
+
+
+    def show_register_page(self):
+        for widget in self.tkn.winfo_children():
+            widget.destroy()
+
+        # Add registration form elements
+        label = tkinter.Label(self.tkn, text="Register here for Event hub", font=("Helvetica", 20))
+        label.configure(bg="white")
+        label.pack(pady=20)
+
+        # First Name entry
+        self.first_name_label = tkinter.Label(self.tkn, text="First Name:")
+        self.configure_label(self.first_name_label)
+        self.first_name_label.pack()
+        self.first_name_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.first_name_entry)
+        self.first_name_entry.pack()
+
+        # Last Name entry
+        self.last_name_label = tkinter.Label(self.tkn, text="Last Name:")
+        self.configure_label(self.last_name_label)
+        self.last_name_label.pack()
+        self.last_name_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.last_name_entry)
+        self.last_name_entry.pack()
+
+        # Email (Gmail ID) entry
+        self.email_entry = tkinter.Label(self.tkn, text="Email (Gmail ID):")
+        self.configure_label(self.email_entry)
+        self.email_entry.pack()
+        self.email_entry = tkinter.Entry(self.tkn)
+        self.configure_entry(self.email_entry)
+        self.email_entry.pack()
+
+        # Password entry
+        self.password_label = tkinter.Label(self.tkn, text="Password:")
+        self.configure_label(self.password_label)
+        self.password_label.pack()
+        self.password_entry = tkinter.Entry(self.tkn,show="*")
+        self.configure_entry(self.password_entry)
+        self.password_entry.pack()
+
+        # Register button
+        self.register_button = tkinter.Button(self.tkn, text="Register", command=self.registerUser)
+        self.configure_button(self.register_button)
+        self.register_button.pack(pady=20)
+
+        # Back button to return to the welcome page
+        self.back_button = tkinter.Button(self.tkn, text="Back to Welcome", command=self.show_welcome_page)
+        self.configure_button(self.back_button)
+        self.back_button.pack(pady=10)
+
+
 
 
 
