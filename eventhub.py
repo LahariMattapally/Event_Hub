@@ -28,3 +28,9 @@ class Eventhub():
 
         self.database= mysql.connect(**database)
         self.cursor = self.database.cursor()
+
+        # Create the database tables
+        self.createUserTable()
+        self.createEventTable()
+        self.createEventRegistrationTable()
+        self.createEventCommentTable()
